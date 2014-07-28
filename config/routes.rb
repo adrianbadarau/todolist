@@ -1,5 +1,7 @@
 TodoList::Application.routes.draw do
-  resources :todolists
+  resources :todolists do
+    resources :todo_items
+  end
   root 'todolists#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
