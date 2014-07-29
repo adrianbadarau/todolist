@@ -1,2 +1,12 @@
-<h1>TodoItems#index</h1>
-<p>Find me in app/views/todo_items/index.html.erb</p>
+<h1><%= @todolist.title %></h1>
+
+<ul class="todo_items">
+  <% @todolist.todo_items.each do |todo_item| %>
+    <li id="<%= dom_id(todo_item) %>">
+      <%= todo_item.content %>
+      <%= link_to 'Edit', edit_todolist_todo_item_path(todo_item) %>
+    </li>
+  <% end %>
+</ul>
+
+<p><%= link_to 'New Todo Item', new_todolist_todo_item_path %></p>
