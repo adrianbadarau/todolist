@@ -1,15 +1,16 @@
 class TodoItemsController < ApplicationController
+  before_action :find_todolist
   def index
-    @todolist = Todolist.find(params[:todolist_id])
+
   end
 
   def new
-    @todolist = Todolist.find(params[:todolist_id])
+
     @todo_item = @todolist.todo_items.new
   end
 
   def create
-    @todolist = Todolist.find(params[:todolist_id])
+
     @todo_item = @todolist.todo_items.new(todo_item_params)
     if @todo_item.save
       flash[:success] = 'Added todo item'
@@ -21,12 +22,11 @@ class TodoItemsController < ApplicationController
   end
 
   def edit
-    @todolist = Todolist.find(params[:todolist_id])
+
     @todo_item = @todolist.todo_items.find(params[:id])
   end
 
   def update
-    @todolist = Todolist.find(params[:todolist_id])
     @todo_item = @todolist.todo_items.find(params[:id])
     if @todo_item.update_attributes(todo_item_params)
       flash[:success] = 'Saved todo item'
@@ -37,11 +37,25 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def destroy
+    @todo_item = @todolist.todo_items.find(params[:id])
+    if @todo_item.destroy
+      flash[:success] = 'Item was deleted'
+    else
+      flash[:error] = 'ERROR: Item could not be deleted'
+    end
+    redirect_to todolist_todo_items_path
+  end
+
   def url_options
     {todolist_id: params[:todolist_id]}.merge(super)
   end
 
   private
+  def find_todolist
+    @todolist = Todolist.find(params[:todolist_id])
+  end
+
   def todo_item_params
     params[:todo_item].permit(:content)
   end
