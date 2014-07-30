@@ -3,12 +3,6 @@ require 'spec_helper'
 describe 'Deleting Todo Items' do
   let!(:todolist){ Todolist.create(title: 'Groceries', description: 'Groceries List') }
   let!(:todo_item){todolist.todo_items.create(content: 'Milk')}
-  def visit_todo_list(list)
-    visit '/todolists'
-    within "#todolist_#{list.id}" do
-      click_link "List Items"
-    end
-  end
 
   it 'Succesfuly deletes a todo item' do
     visit_todo_list(todolist)

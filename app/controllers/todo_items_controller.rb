@@ -21,6 +21,12 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def complete
+    @todo_item = @todolist.todo_items.find(params[:id])
+    @todo_item.update_attribute(:completed_at, Time.now)
+    redirect_to todolist_todo_items_path, notice: 'Todo Item marked as complete'
+  end
+
   def edit
 
     @todo_item = @todolist.todo_items.find(params[:id])

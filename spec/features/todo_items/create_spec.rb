@@ -3,13 +3,6 @@ require 'spec_helper'
 describe 'Creating todo_items' do
   let!(:todolist){Todolist.create(title: 'Grocery List', description: 'Groceries')}
 
-  def visit_todo_list(list)
-    visit '/todolists'
-    within "#todolist_#{list.id}" do
-      click_link "List Items"
-    end
-  end
-
   it 'is sucesfull with valid content' do
     visit_todo_list(todolist)
     click_link 'New Todo Item'
